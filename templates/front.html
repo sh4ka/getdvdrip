@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}	
+<div class="row">
+  {% for release in releases['movies'] %}
+  	<div class="span2 release-container" style="height: 250px" data-id="{{release['id']}}">
+	    <p class="release-header" style="height: 30px" >{{release['title']}}</p>
+	    <a href="#" class="release-magnet" data-synopsis="{{release['synopsis']}}" data-title="{{release['title']}}"><img src="{{release['posters']['profile']}}"></img></a>
+	    <!-- <p class="release-synopsis">{{release['synopsis']}}</p> -->
+	</div>
+  {% endfor %}
+  </div>
+  {% include 'modal_release.html' %}
+{% endblock %}
