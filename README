@@ -1,3 +1,7 @@
+Created by @sh4ka
+Licensed under the GPLv3 (see GPL.txt)
+
+Installation:
 1.- create file api.py
 2.- set var API to your rottentomatoes API key
 3.- enjoy
