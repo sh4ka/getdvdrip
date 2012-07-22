@@ -34,6 +34,7 @@ class MainPage(Handler):
  			"""Main page function"""
  			def get(self):
  				today = datetime.date.today()
+ 				today = '2012-07-23'
  				releases = get_today_release(str(today))
  				self.render('front.html', releases = releases)
 
@@ -57,13 +58,14 @@ def get_today_release(today):
 		logging.error('DB QUERY')
 		result = db.GqlQuery("SELECT * "
 							   "FROM Release "
-							   "WHERE created > :1 "
+							   "WHERE created = :1 "
 							   "ORDER BY created DESC "
 							   "LIMIT 1",
-							   datetime.datetime.now() + datetime.timedelta(days=-1))
-		result = list(result)
-		if len(result) == 1:			
-			releases = result[0].data
+							   datetime.date.today())
+		row = result.get()		
+		if row:
+			logging.error('RELEASE FOUND IN DB')	
+			releases = row.data
 			memcache.set(key, releases)
 		if not releases:
 			logging.error('FETCHING RELEASE API')
