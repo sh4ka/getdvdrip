@@ -50,10 +50,10 @@ class Release(db.Model):
     created = db.DateTimeProperty(auto_now_add = True)
     last_modified = db.DateTimeProperty(auto_now = True)
 
-def get_today_release(today, update = False):
+def get_today_release(today):
 	key = today
 	releases = memcache.get(key)
-	if not releases or update:
+	if not releases:
 		logging.error('DB QUERY')
 		result = db.GqlQuery("SELECT * "
 							   "FROM Release "
@@ -62,7 +62,7 @@ def get_today_release(today, update = False):
 							   "LIMIT 1",
 							   datetime.datetime.now() + datetime.timedelta(days=-1))
 		result = list(result)
-		if len(result) > 0:			
+		if len(result) == 1:			
 			releases = result[0].data
 			memcache.set(key, releases)
 		if not releases:
