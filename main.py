@@ -86,7 +86,7 @@ def get_today_release(today):
 		logging.error('DB QUERY')
 		result = db.GqlQuery("SELECT * "
 							   "FROM Release "
-							   "WHERE created = :1 "
+							   "WHERE created >= :1 "
 							   "ORDER BY created DESC "
 							   "LIMIT 1",
 							   datetime.date.today())
@@ -106,10 +106,11 @@ def get_today_release(today):
 def get_title(title):
 	title_url = urllib2.unquote(title)
 	title_url = title_url.replace(' ', '-')
+	title_url = title_url.lower()
 	title = urllib2.quote(title_url.replace('-', ' '))
 	key = title_url
-	movie = memcache.get(title_url)
-	if not movie:
+	movie = memcache.get(key)
+	if movie is None:
 		logging.error('DB QUERY')
 		q = db.GqlQuery("SELECT * "
 							   "FROM Movie "
@@ -117,16 +118,16 @@ def get_title(title):
 							   "LIMIT 1",
 							   title_url)
 		row = q.get()
-		if movie:
+		if row:
 			logging.error('MOVIE FOUND IN DB')
 			movie = row.data
 			memcache.set(key, movie)
-		if not movie:
+		if movie is None:
 			logging.error('FETCHING MOVIE FROM API')
 			movie = query.query_movie(title)
 			m_dict = json.loads(movie)
 			if m_dict['movies'] != []:
-				m = Movie(title = title_url, data = movie)
+				m = Movie(title = key, data = movie)
 				m.put()
 				memcache.set(key, movie)
 			else:

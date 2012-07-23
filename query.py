@@ -13,7 +13,7 @@ def query_api():
 		result = u.read()
 	except Exception, e:
 		logging.error('RELEASES API ERROR')
-	return result
+	return result.strip()
 
 def query_movie(title):
 	result = {}
@@ -23,7 +23,7 @@ def query_movie(title):
 		result = u.read()
 	except Exception, e:
 		logging.error('MOVIES API ERROR')
-	return result
+	return result.strip()
 
 def query_torrent(search):
 	result = {}
