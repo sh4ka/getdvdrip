@@ -1,16 +1,22 @@
 <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Get DVD movies</a>
+          </button>
+          <a class="brand" href="/">Get DVD movies</a>
           <div class="nav-collapse">
             <ul class="nav">
+
             </ul>
           </div><!--/.nav-collapse -->
+          <form method="post" class="search nav-collapse" target="/">
+            <div class="input-append">
+              <input type="text" class="span2" placeholder="movie title" name="search"><button id="btnSearchMovie" class="btn" type="submit">Search</button>
+            </div>            
+          </form>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ html,body
 
 #main
 {
-    overflow:auto;
+    /*overflow:auto;*/
     padding-bottom:150px; /* this needs to be bigger than footer height*/
 }
 
@@ -24,3 +24,9 @@ html,body
     padding-top:20px;
     color:#fff;
 } 
+
+form.search{
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}

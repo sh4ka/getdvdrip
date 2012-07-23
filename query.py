@@ -15,6 +15,16 @@ def query_api():
 		logging.error('RELEASES API ERROR')
 	return result
 
+def query_movie(title):
+	result = {}
+	query_url = configuration.MOVIEURL+api.API+configuration.QUERYPARAM+title+configuration.LIMITPARAM
+	try:
+		u = urllib2.urlopen(query_url)
+		result = u.read()
+	except Exception, e:
+		logging.error('MOVIES API ERROR')
+	return result
+
 def query_torrent(search):
 	result = {}
 	if search:		
