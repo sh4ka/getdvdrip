@@ -80,8 +80,9 @@ class Movie(db.Model):
 
 def get_today_release(today):
 	key = today
+	logging.error(today)
 	releases = memcache.get(key)
-	if not releases:
+	if releases is None:
 		logging.error('DB QUERY')
 		result = db.GqlQuery("SELECT * "
 							   "FROM Release "
@@ -94,7 +95,7 @@ def get_today_release(today):
 			logging.error('RELEASE FOUND IN DB')	
 			releases = row.data
 			memcache.set(key, releases)
-		if not releases:
+		if releases is None:
 			logging.error('FETCHING RELEASE API')
 			releases = query.query_api()
 			r = Release(data = releases)

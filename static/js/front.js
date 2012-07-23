@@ -10,7 +10,7 @@ $(document).ready(function(){
 	})
 
 	function get_magnet_links(title){
-		title = escape(title);
+		title = title.replace(' ', '-');
 		$.ajax({
 			url : 'search_magnet.json',
 			dataType: 'json',
