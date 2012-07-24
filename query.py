@@ -17,7 +17,7 @@ def query_api():
 
 def query_movie(title):
 	result = {}
-	query_url = configuration.MOVIEURL+api.API+configuration.QUERYPARAM+title+configuration.LIMITPARAM
+	query_url = configuration.MOVIEURL+api.API+configuration.QUERYPARAM+title
 	try:
 		u = urllib2.urlopen(query_url)
 		result = u.read()

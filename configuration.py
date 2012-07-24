@@ -4,7 +4,7 @@ DVDPAGELIMIT = '&page_limit=50'
 
 MOVIEURL = 'http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey='
 QUERYPARAM = '&q='
-LIMITPARAM = '&page_limit=1'
+LIMITPARAM = '&page_limit=50'
 
 # fenopy
 QUERYURL = 'http://fenopy.eu/module/search/api.php?keyword='

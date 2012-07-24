@@ -38,9 +38,19 @@ class MainPage(Handler):
 		self.render('front.html', releases = releases)
 
 	def post(self):
-		search_term = self.request.get('search')	
-		search_term = search_term.replace(' ', '-')
-		self.redirect('/movie/'+search_term)
+		search = self.request.get('search')
+		search = urllib2.quote(cgi.escape(search))
+		self.redirect('/search/'+search)
+
+class SearchResults(Handler):
+	"""Main page function"""
+	def get(self, search):
+		search = urllib2.quote(cgi.escape(search))
+		self.render('front.html', releases = get_title(search))
+	def post(self, search):
+		search = self.request.get('search')
+		search = urllib2.quote(cgi.escape(search))
+		self.redirect('/search/'+search)
 
 class SearchMagnet(Handler):
 	"""Search function"""
@@ -50,21 +60,6 @@ class SearchMagnet(Handler):
 		self.response.headers['Content-Type'] = "application/json"
 		output = query.query_torrent(search)
 		self.write(json.dumps(output))
-
-class MoviePermalink(Handler):
-	"""Permalink"""
- 	def get(self, title):
- 		movie = get_title(title)
- 		if movie:
- 			self.render('movie.html', movie = movie)
- 		else:
- 			self.error(404)
-
- 	def post(self, params):
- 		title = self.request.get('search')
- 		title = cgi.escape(title)
- 		title = title.replace(' ', '-')
- 		self.redirect('/movie/'+title)
 
 class Release(db.Model):
     data = db.TextProperty(required = True)
@@ -130,7 +125,7 @@ def get_title(title):
 
 app = webapp2.WSGIApplication([
 					('/', MainPage),
-					('/search_magnet.json', SearchMagnet),
-					('/movie/([a-zA-Z0-9-]+)', MoviePermalink),
+					('/search/(.+)', SearchResults),
+					('/search_magnet.json', SearchMagnet)
 					], debug=True)
  				 		

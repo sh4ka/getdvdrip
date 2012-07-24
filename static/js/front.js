@@ -9,10 +9,15 @@ $(document).ready(function(){
 		$('#modal_release').modal('toggle');
 	})
 
+	$('.movie-permalink').click(function(e){
+		e.preventDefault();
+		window.location = '/search/'+encodeURI($(this).html());
+	})
+
 	function get_magnet_links(title){
 		title = title.replace(' ', '-');
 		$.ajax({
-			url : 'search_magnet.json',
+			url : '/search_magnet.json',
 			dataType: 'json',
 			data :  {
 				search: title
