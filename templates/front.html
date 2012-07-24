@@ -2,12 +2,15 @@
 
 
 {% block content %}	
+<h2>New DVD releases: </h2>
 <div class="row">
   {% for release in releases['movies'] %}
   	<div class="span2 release-container" style="height: 250px" data-id="{{release['id']}}">
 	    <p class="release-header" style="height: 30px" ><a href="" class="movie-permalink">{{release['title']}}</a></p>
 	    <a href="#" class="release-magnet" data-synopsis="{{release['synopsis']}}" data-title="{{release['title']}}"><img src="{{release['posters']['profile']}}"></img></a>
 	  </div>
+    {% else %}
+    <p>Problem fetching today's releases.</p>
   {% endfor %}
   </div>
   {% include 'modal_release.html' %}

@@ -46,7 +46,7 @@ class SearchResults(Handler):
 	"""Main page function"""
 	def get(self, search):
 		search = urllib2.quote(cgi.escape(search))
-		self.render('front.html', releases = get_title(search))
+		self.render('results.html', releases = get_title(search))
 	def post(self, search):
 		search = self.request.get('search')
 		search = urllib2.quote(cgi.escape(search))

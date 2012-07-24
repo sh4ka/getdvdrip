@@ -15,6 +15,10 @@ html,body
     padding-bottom:150px; /* this needs to be bigger than footer height*/
 }
 
+a.brand{
+    margin-top: 5px;
+}
+
 .footer 
 {
     position: relative;
