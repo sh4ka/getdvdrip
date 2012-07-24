@@ -77,17 +77,17 @@ def get_today_release(today):
 	key = today
 	releases = memcache.get(key)
 	if releases is None:
-		logging.error('DB QUERY')
+		logging.info('DB QUERY')
 		q = db.Query(Release)
 		q.filter('created =', datetime.date.today()).order('-created')
 		result = q.fetch(limit=1)
 		if len(result) > 0:
-			logging.error('RELEASE FOUND IN DB')
+			logging.info('RELEASE FOUND IN DB')
 			row = result[0]	
 			releases = row.data
 			memcache.set(key, releases)
 		if releases is None:
-			logging.error('FETCHING RELEASE API')
+			logging.info('FETCHING RELEASE API')
 			releases = query.query_api()
 			r = Release(data = releases)
 			r.put()
@@ -102,17 +102,17 @@ def get_title(title):
 	key = title_url
 	movie = memcache.get(key)
 	if movie is None:
-		logging.error('DB QUERY')
+		logging.info('DB QUERY')
 		q = db.Query(Movie)
 		q.filter('title =', key)
 		result = q.fetch(limit=1)
 		if len(result) > 0:
-			logging.error('MOVIE FOUND IN DB')
+			logging.info('MOVIE FOUND IN DB')
 			row = result[0]
 			movie = row.data
 			memcache.set(key, movie)
 		if movie is None:
-			logging.error('FETCHING MOVIE FROM API')
+			logging.info('FETCHING MOVIE FROM API')
 			movie = query.query_movie(title)
 			m_dict = json.loads(movie)
 			if m_dict['total'] != 0:

@@ -12,7 +12,7 @@ def query_api():
 		u = urllib2.urlopen(query_url)
 		result = u.read()
 	except Exception, e:
-		logging.error('RELEASES API ERROR')
+		logging.info('RELEASES API ERROR')
 	return result.strip()
 
 def query_movie(title):
@@ -22,7 +22,7 @@ def query_movie(title):
 		u = urllib2.urlopen(query_url)
 		result = u.read()
 	except Exception, e:
-		logging.error('MOVIES API ERROR')
+		logging.info('MOVIES API ERROR')
 	return result.strip()
 
 def query_torrent(search):
@@ -33,5 +33,5 @@ def query_torrent(search):
 			u = urllib2.urlopen(query_url)
 			result = json.loads(u.read())
 		except Exception, e:
-			logging.error('SEARCH ERROR')
+			logging.info('SEARCH ERROR')
 	return result
