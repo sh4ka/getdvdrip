@@ -13,4 +13,6 @@ ORDERSTRING = '&sort=peer'
 LIMITSTRING = '&limit=5'
 CATEGORYMOVIESSTRING = '&category=3'
 
-RELEASESCACHEDIR = 'cache/'
+# magnet vitamine
+
+TRACKERS = "&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80"

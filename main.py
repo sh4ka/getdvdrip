@@ -57,8 +57,9 @@ class SearchMagnet(Handler):
  	def get(self):
  		search = self.request.get('search')
  		search = urllib2.quote(cgi.escape(search))
-		self.response.headers['Content-Type'] = "application/json"
-		output = query.query_torrent(search)
+ 		output = query.query_torrent(search)
+		output = add_trackers_to_magnets(output)
+		self.response.headers['Content-Type'] = "application/json"		
 		self.write(json.dumps(output))
 
 class Release(db.Model):
@@ -121,6 +122,11 @@ def get_title(title):
 			else:
 				movie = '{}'
 	return json.loads(movie)
+
+def add_trackers_to_magnets(magnet_list):
+	for item in magnet_list:		
+		item['magnet'] += configuration.TRACKERS
+	return magnet_list
 
 
 app = webapp2.WSGIApplication([
