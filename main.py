@@ -34,7 +34,6 @@ class MainPage(Handler):
 	"""Main page function"""
 	def get(self):
 		today = datetime.date.today()
-		today = '2012-07-23'
 		releases = get_today_release(str(today))
 		self.render('front.html', releases = releases)
 
@@ -69,30 +68,26 @@ class MoviePermalink(Handler):
 
 class Release(db.Model):
     data = db.TextProperty(required = True)
-    created = db.DateTimeProperty(auto_now_add = True)
+    created = db.DateProperty(auto_now_add = True)
     last_modified = db.DateTimeProperty(auto_now = True)
 
 class Movie(db.Model):
-	title = db.TextProperty(required = True)
+	title = db.StringProperty(required = True)
 	data = db.TextProperty(required = True)
 	created = db.DateTimeProperty(auto_now_add = True)
 	last_modified = db.DateTimeProperty(auto_now = True)
 
 def get_today_release(today):
 	key = today
-	logging.error(today)
 	releases = memcache.get(key)
 	if releases is None:
 		logging.error('DB QUERY')
-		result = db.GqlQuery("SELECT * "
-							   "FROM Release "
-							   "WHERE created >= :1 "
-							   "ORDER BY created DESC "
-							   "LIMIT 1",
-							   datetime.date.today())
-		row = result.get()		
-		if row:
-			logging.error('RELEASE FOUND IN DB')	
+		q = db.Query(Release)
+		q.filter('created =', datetime.date.today()).order('-created')
+		result = q.fetch(limit=1)
+		if len(result) > 0:
+			logging.error('RELEASE FOUND IN DB')
+			row = result[0]	
 			releases = row.data
 			memcache.set(key, releases)
 		if releases is None:
@@ -112,21 +107,19 @@ def get_title(title):
 	movie = memcache.get(key)
 	if movie is None:
 		logging.error('DB QUERY')
-		q = db.GqlQuery("SELECT * "
-							   "FROM Movie "
-							   "WHERE title = :1 "
-							   "LIMIT 1",
-							   title_url)
-		row = q.get()
-		if row:
+		q = db.Query(Movie)
+		q.filter('title =', 'matrix')
+		result = q.fetch(limit=1)
+		if len(result) > 0:
 			logging.error('MOVIE FOUND IN DB')
+			row = result[0]
 			movie = row.data
 			memcache.set(key, movie)
 		if movie is None:
 			logging.error('FETCHING MOVIE FROM API')
 			movie = query.query_movie(title)
 			m_dict = json.loads(movie)
-			if m_dict['movies'] != []:
+			if m_dict['total'] != 0:
 				m = Movie(title = key, data = movie)
 				m.put()
 				memcache.set(key, movie)
