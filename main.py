@@ -108,7 +108,7 @@ def get_title(title):
 	if movie is None:
 		logging.error('DB QUERY')
 		q = db.Query(Movie)
-		q.filter('title =', 'matrix')
+		q.filter('title =', key)
 		result = q.fetch(limit=1)
 		if len(result) > 0:
 			logging.error('MOVIE FOUND IN DB')
