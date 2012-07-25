@@ -80,30 +80,40 @@ class Movie(db.Model):
 	last_modified = db.DateTimeProperty(auto_now = True)
 
 def get_today_release(today):
-	key = today
-	releases = memcache.get(key)
+	releases = memcache.get(today)
 	if releases is None:
-		logging.info('DB QUERY')
-		q = db.Query(Release)
-		q.filter('created =', datetime.date.today()).order('-created')
-		result = q.fetch(limit=1)
-		if len(result) > 0:
-			logging.info('RELEASE FOUND IN DB')
-			row = result[0]	
-			releases = row.data
-			memcache.set(key, releases)
+		releases = get_release_from_db()		
 		if releases is None:
-			logging.info('FETCHING RELEASE API')
-			releases = query.query_api()
-			r = Release(data = releases)
-			r.put()
-			memcache.set(key, releases)
+			releases = get_release_from_api()
+			put_release(releases)
+		memcache.set(today, releases)
 	return json.loads(releases)
 
+def get_release_from_db(date_created=None):
+	logging.info('DB QUERY')
+	releases = None
+	if date_created is None:
+		date_created = datetime.date.today()
+	q = db.Query(Release)
+	q.filter('created =', date_created).order('-created')
+	result = q.fetch(limit=1)
+	if len(result) > 0:
+		logging.info('RELEASE FOUND IN DB')
+		row = result[0]	
+		releases = row.data
+	return releases
+
+def get_release_from_api():
+	logging.info('FETCHING RELEASE API')
+	return query.query_api()
+
+def put_release(release):	
+	r = Release(data = release)
+	r.put()
+
+
 def get_title(title):
-	title_url = urllib2.unquote(title)
-	title_url = title_url.replace(' ', '-')
-	title_url = title_url.lower()
+	title_url = urllib2.unquote(title).replace(' ', '-').lower()
 	title = urllib2.quote(title_url.replace('-', ' '))
 	key = title_url
 	movie = memcache.get(key)
