@@ -5,7 +5,9 @@ import urllib2
 import logging
 import json
 import datetime
+import time
 import cgi
+import hashlib
 
 from google.appengine.api import memcache
 from google.appengine.ext import db
@@ -13,6 +15,7 @@ from google.appengine.ext import db
 # modules
 import configuration
 import query
+import cookies
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -33,6 +36,9 @@ class Handler(webapp2.RequestHandler):
 class MainPage(Handler):
 	"""Main page function"""
 	def get(self):
+		uid = cookies.get_cookie(self, 'uid')
+		if uid is None:
+			cookies.set_cookie(self, 'uid', hashlib.sha1(str(time.time())).hexdigest(), 'never' )
 		today = datetime.date.today()
 		releases = get_today_release(str(today))
 		self.render('front.html', releases = releases)
