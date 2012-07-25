@@ -1,2 +1,3 @@
 *.pyc
 api.py
+salt.py
