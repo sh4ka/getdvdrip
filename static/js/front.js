@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var search_url = 
+	
 	$('.release-magnet').click(function(e){
 		e.preventDefault();
 		selected_id = $(this).attr('data-id')

@@ -17,6 +17,9 @@
   <script type="text/javascript" src="/bootstrap/js/bootstrap-modal.js"></script>
   <script type="text/javascript" src="/bootstrap/js/bootstrap-tooltip.js"></script>
   <script type="text/javascript" src="/bootstrap/js/bootstrap-popover.js"></script>
+  <script type="text/javascript" src="/bootstrap/js/bootstrap-alert.js"></script>
+
+  <script type="text/javascript" src="/static/js/alert_header.js"></script>
 
   <title>DVD Releases</title>
 </head>
@@ -24,10 +27,14 @@
 <body>
 
   {% include 'header.html' %}
+
   <div id="wrap">
     <div id="main" class="container clear-top">
+    {% include 'head_alert.html' %}
+
     {% block content %}
     {% endblock %}
+    
     </div>
   </div>  
 
