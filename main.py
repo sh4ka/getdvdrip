@@ -41,6 +41,8 @@ class MainPage(Handler):
 			cookies.set_cookie(self, 'uid', hashlib.sha1(str(time.time())).hexdigest(), 'never' )
 		today = datetime.date.today()
 		releases = get_today_release(str(today))
+		# self.write(json.dumps(releases))
+		# return
 		self.render('front.html', releases = releases)
 
 	def post(self):
@@ -49,10 +51,11 @@ class MainPage(Handler):
 		self.redirect('/search/'+search)
 
 class SearchResults(Handler):
-	"""Main page function"""
+	"""Search function"""
 	def get(self, search):
 		search = urllib2.quote(cgi.escape(search))
-		self.render('results.html', releases = get_title(search))
+		results = get_title(search)
+		self.render('results.html', releases = results)
 	def post(self, search):
 		search = self.request.get('search')
 		search = urllib2.quote(cgi.escape(search))
@@ -85,9 +88,19 @@ def get_today_release(today):
 		releases = get_release_from_db()		
 		if releases is None:
 			releases = get_release_from_api()
+			releases = set_star_ratings(releases)
 			put_release(releases)
 		memcache.set(today, releases)
 	return json.loads(releases)
+
+def set_star_ratings(releases):
+	r_dict = json.loads(releases)
+	for movie in r_dict['movies']:
+		if movie['ratings']['critics_score'] != -1 and movie['ratings']['audience_score'] != -1:
+			movie['star_rating'] = ((movie['ratings']['critics_score'] + movie['ratings']['audience_score']) / 2.0) / 20.0
+		elif movie['ratings']['audience_score'] != -1:
+			movie['star_rating'] = movie['ratings']['audience_score'] / 20.0
+	return json.dumps(r_dict)
 
 def get_release_from_db(date_created=None):
 	logging.info('DB QUERY')
@@ -130,6 +143,7 @@ def get_title(title):
 		if movie is None:
 			logging.info('FETCHING MOVIE FROM API')
 			movie = query.query_movie(title)
+			movie = set_star_ratings(movie)
 			m_dict = json.loads(movie)
 			if m_dict['total'] != 0:
 				m = Movie(title = key, data = movie)

@@ -3,11 +3,14 @@
 
 {% block content %}	
 <h2>New DVD releases: </h2>
-<div class="row">
+<div class="row" style="">
   {% for release in releases['movies'] %}
-  	<div class="span2 release-container" style="height: 250px" data-id="{{release['id']}}">
+  	<div class="span2 release-container" style="height: 250px; margin-top: 10px;" data-id="{{release['id']}}">
 	    <p class="release-header" style="height: 30px" ><a href="" class="movie-permalink">{{release['title']}}</a></p>
 	    <a href="#" class="release-magnet" data-synopsis="{{release['synopsis']}}" data-title="{{release['title']}}" data-crating="{{release['ratings']['critics_score']}}" data-arating="{{release['ratings']['audience_score']}}"><img src="{{release['posters']['profile']}}"></img></a>
+      <br />
+      <div class="rateit" data-rateit-value="{{release['star_rating']}}" data-rateit-ispreset="true" data-rateit-readonly="true">
+      </div>
 	  </div>
     {% else %}
     <p>Problem fetching today's releases.</p>
