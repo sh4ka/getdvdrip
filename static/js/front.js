@@ -6,6 +6,14 @@ $(document).ready(function(){
 		selected_id = $(this).attr('data-id')
 		$('.modal-release-title').html($(this).attr('data-title'));
 		$('.modal-release-synopsis').html($(this).attr('data-synopsis'));
+		if($(this).attr('data-crating') == '-1'){
+			crating = 'N/A'
+		}
+		else{
+			crating = $(this).attr('data-crating');
+		}
+		$('.modal-release-crating').html(crating);
+		$('.modal-release-arating').html($(this).attr('data-arating'));
 		get_magnet_links($(this).attr('data-title'));
 		$('#modal_release').modal('toggle');
 	})
