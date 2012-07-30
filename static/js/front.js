@@ -2,7 +2,7 @@ $(document).ready(function(){
 	
 	$('.release-magnet').click(function(e){
 		e.preventDefault();
-		$('#magnet-links-list').html('<img src="/static/img/ajax-loader.gif" />')
+		$('#magnet-links-list').html('<li><img src="/static/img/ajax-loader.gif" /></li>')
 		selected_id = $(this).attr('data-id')
 		$('.modal-release-title').html($(this).attr('data-title'));
 		$('.modal-release-synopsis').html($(this).attr('data-synopsis'));
