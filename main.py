@@ -44,7 +44,6 @@ class MainPage(Handler):
             cookies.set_cookie(self, 'uid', hashlib.sha1(str(time.time())).hexdigest(), 'never')
 
         today = datetime.date.today()
-        # get tmdb config
         releases = get_today_release(str(today))
         # self.write(json.dumps(releases))
         # return
@@ -95,7 +94,7 @@ class Movie(db.Model):
     last_modified = db.DateTimeProperty(auto_now=True)
 
 
-def config(today):
+def get_config(today):
     config = memcache.get('config'+today)
     if config is None:
         config = query.get_moviedb_config()
@@ -128,8 +127,8 @@ def set_star_ratings(releases):
 
 
 def set_covers(releases):
-    today = datetime.date.today()
-    config = config(today)
+    today = str(datetime.date.today())
+    config = json.loads(get_config(today))
     r_dict = json.loads(releases)
     for movie in r_dict['movies']:
         # todo param width

@@ -1,3 +1,4 @@
+import urllib
 import urllib2
 import json
 import logging
@@ -39,10 +40,11 @@ def query_movie(title):
 
 def get_movie_poster(title):
     # find movie id
+    title = urllib.quote_plus(title)
     poster_image= ''
     search_url = configuration.MOVIE_SEARCH_URL + api.MOVIE_API_KEY + '&query=' + title
     try:
-        print 'Search url: ' + search_url
+        logging.info('Search url: ' + search_url)
         u = urllib2.urlopen(search_url)
         result = u.read()
         data = json.loads(result.strip())
@@ -50,16 +52,16 @@ def get_movie_poster(title):
         if movie:
             data_url = configuration.MOVIE_DATA_URL.replace('{id}', str(movie['id']))
             poster_url = data_url + '?api_key=' + api.MOVIE_API_KEY
-            print 'Poster url: ' + poster_url
+            logging.info('Poster url: ' + poster_url)
             u = urllib2.urlopen(poster_url)
             data_result = u.read()
             movie_data = json.loads(data_result.strip())
             poster_image = movie_data['posters'][0]['file_path']
         else:
-            print 'No movie found'
+            logging.info('No movie found')
     except Exception, e:
-        print e
-        logging.info('MOVIESDB API ERROR')
+        logging.error('MOVIESDB API ERROR')
+        logging.error(e)
     return poster_image
 
 
