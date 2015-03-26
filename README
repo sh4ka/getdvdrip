@@ -5,4 +5,4 @@ Installation:
 1.- create file api.py in app dir
 2.- set var API to your rottentomatoes API key
 2b.- set var MOVIE_API_KEY to your themoviedb.org key
-3.- create file salt.py with a var nemd SALT and a random salt
+3.- create file salt.py with a var named SALT and a random salt
