@@ -3,97 +3,46 @@
 <head>
   {% include 'meta.html' %}
   <!-- css -->
-  <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css" />
-  <link type="text/css" rel="stylesheet" href="/static/main.css" />
+  <link type="text/css" rel="stylesheet" href="/../../bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
   <link type="text/css" rel="stylesheet" href="/static/js/rateit/rateit.css" />
-  <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
 
-    <title>Get dvd movies</title>  
+    <title>Get dvd movies</title>
 
-    <!-- js -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
-  <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
-  <script type="text/javascript" src="/bootstrap/js/bootstrap-modal.js"></script>
-  <script type="text/javascript" src="/bootstrap/js/bootstrap-tooltip.js"></script>
-  <script type="text/javascript" src="/bootstrap/js/bootstrap-popover.js"></script>
-  <script type="text/javascript" src="/bootstrap/js/bootstrap-alert.js"></script>
-
-
-  <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
-  <script type="text/javascript" src="/static/js/alert_header.js"></script>
-
-  <script type="text/javascript" src="/static/js/rateit/jquery.rateit.min.js"></script>
-
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <body>
 
+<div class="container">
   {% include 'header.html' %}
-
-  <div id="wrap">
-    <div id="main" class="container clear-top">
-        <script>
-            // Include the UserVoice JavaScript SDK (only needed once on a page)
-            UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/epkimU4jlgHmtZtc5k8Myg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
-
-            //
-            // UserVoice Javascript SDK developer documentation:
-            // https://www.uservoice.com/o/javascript-sdk
-            //
-
-            // Set colors
-            UserVoice.push(['set', {
-                accent_color: '#808283',
-                trigger_color: 'white',
-                trigger_background_color: '#448dd6'
-            }]);
-
-            // Identify the user and pass traits
-            // To enable, replace sample data with actual user traits and uncomment the line
-            UserVoice.push(['identify', {
-                //email:      'john.doe@example.com', // User’s email address
-                //name:       'John Doe', // User’s real name
-                //created_at: 1364406966, // Unix timestamp for the date the user signed up
-                //id:         123, // Optional: Unique id of the user (if set, this should not change)
-                //type:       'Owner', // Optional: segment your users by type
-                //account: {
-                //  id:           123, // Optional: associate multiple users with a single account
-                //  name:         'Acme, Co.', // Account name
-                //  created_at:   1364406966, // Unix timestamp for the date the account was created
-                //  monthly_rate: 9.99, // Decimal; monthly rate of the account
-                //  ltv:          1495.00, // Decimal; lifetime value of the account
-                //  plan:         'Enhanced' // Plan name for the account
-                //}
-            }]);
-
-            // Add default trigger to the bottom-right corner of the window:
-            UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-left' }]);
-
-            // Or, use your own custom trigger:
-            //UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
-
-            // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
-            UserVoice.push(['autoprompt', {}]);
-        </script>
-    {% include 'head_alert.html' %}
 
     {% block content %}
     {% endblock %}
-    
-    </div>
-    {% include 'footer.html' %}
-  </div>  
 
-  
+    {% include 'footer.html' %}
+
+</div>
+
+  <!-- js -->
+  <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="../../bower_components/bootstrap/js/modal.js"></script>
+
+
+  <script type="text/javascript" src="../../static/js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="../../static/js/alert_header.js"></script>
+
+  <script type="text/javascript" src="../../static/js/rateit/jquery.rateit.min.js"></script>
+  {% block javascripts %}{% endblock %}
 
   {% include 'ga.html' %}
 
 </body>
 
 </html>
-

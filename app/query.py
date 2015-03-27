@@ -62,6 +62,7 @@ def get_movie_poster(title):
     except Exception, e:
         logging.error('MOVIESDB API ERROR')
         logging.error(e)
+        poster_image = None
     return poster_image
 
 
@@ -86,4 +87,3 @@ def get_magnets(json_result):
     except Exception, e:
             logging.info('NO RESULTS')
     return magnet_list
-

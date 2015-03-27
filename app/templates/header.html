@@ -1,22 +1,19 @@
-<div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/">Get DVD movies</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-
-            </ul>
+<!-- Static navbar -->
+      <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Site navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Get DVD movies</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <form method="post" class="navbar-form navbar-right search">
+                <input type="text" class="span2" placeholder="movie title" name="search"><button id="btnSearchMovie" class="btn" type="submit">Search</button>
+            </form>
           </div><!--/.nav-collapse -->
-          <form method="post" class="search nav-collapse">
-            <div class="input-append">
-              <input type="text" class="span2" placeholder="movie title" name="search"><button id="btnSearchMovie" class="btn" type="submit">Search</button>
-            </div>            
-          </form>
-        </div>
-      </div>
-    </div>
+        </div><!--/.container-fluid -->
+      </nav>

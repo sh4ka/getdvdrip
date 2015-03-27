@@ -1,22 +1,19 @@
 {% extends "base.html" %}
-
-
-{% block content %}	
-<h2>New DVD releases: </h2>
-<div class="row" style="">
+{% block content %}
+<div class="row main-content">
   {% for release in releases['movies'] %}
-  	<div class="span2 release-container" style="height: 250px; margin-top: 10px;" data-id="{{release['id']}}">
-	    <p class="release-header" style="height: 30px" ><a href="" class="movie-permalink">{{release['title']}}</a></p>
-	    <a href="#" class="release-magnet" data-synopsis="{{release['synopsis']}}" data-title="{{release['title']}}" data-crating="{{release['ratings']['critics_score']}}" data-arating="{{release['ratings']['audience_score']}}"><img src="{{release['poster']}}" alt="{{release['title']}}" /></a>
-      <br />
-      Critic: 
-      <div class="rateit" data-rateit-value="{{release['star_rating']}}" data-rateit-ispreset="true" data-rateit-readonly="true">
-      </div>
+  {% if release['poster'] %}
+  	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 release-container" data-id="{{release['id']}}">
+	    <a href="#" class="release-magnet" data-synopsis="{{release['synopsis']}}" data-title="{{release['title']}}" data-crating="{{release['ratings']['critics_score']}}" data-arating="{{release['ratings']['audience_score']}}">
+            <img src="{{release['poster']}}" alt="{{release['title']}}" class="image-responsive" />
+            </a>
+        <p class="release-header" ><a href="" class="movie-permalink">{{release['title']}}</a></p>
 	  </div>
-    {% else %}
-    <p>Problem fetching today's releases.</p>
+      {% endif %}
   {% endfor %}
   </div>
   {% include 'modal_release.html' %}
+{% endblock %}
+{% block javascripts %}
   <script type="text/javascript" src="/static/js/front.js"></script>
 {% endblock %}

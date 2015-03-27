@@ -1,22 +1,20 @@
 {% extends "base.html" %}
-
-
-{% block content %}	
-	<h2>Search results: </h2>
-	<div class="row">
+{% block content %}
+	<div class="row main-content">
 	  {% for release in releases['movies'] %}
-	  	<div class="span2 release-container" style="height: 250px" data-id="{{release['id']}}">
-		    <p class="release-header" style="height: 30px" ><a href="" class="movie-permalink">{{release['title']}}</a></p>
+	{% if release['poster'] %}
+	  	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 release-container" data-id="{{release['id']}}">
 		    <a href="#" class="release-magnet" data-synopsis="{{release['synopsis']}}" data-title="{{release['title']}}"
-		    data-crating="{{release['ratings']['critics_score']}}" data-arating="{{release['ratings']['audience_score']}}"><img src="{{release['poster']}}" alt="{{release['title']}}" /></a>
-		    Critic: 
-		    <div class="rateit" data-rateit-value="{{release['star_rating']}}" data-rateit-ispreset="true" data-rateit-readonly="true">
-		    </div>
+		    data-crating="{{release['ratings']['critics_score']}}" data-arating="{{release['ratings']['audience_score']}}">
+				<img src="{{release['poster']}}" alt="{{release['title']}}" />
+			</a>
+		    <p class="release-header" style="height: 30px" ><a href="" class="movie-permalink">{{release['title']}}</a></p>
 		  </div>
-		  {% else %}
-		<p>No results for this search.</p>
-	  {% endfor %}
+		{% endif %}
+		{% endfor %}
 	  </div>
 	  {% include 'modal_release.html' %}
+{% endblock %}
+{% block javascripts %}
   <script type="text/javascript" src="/static/js/front.js"></script>
 {% endblock %}

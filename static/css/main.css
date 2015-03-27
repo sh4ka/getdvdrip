@@ -6,7 +6,7 @@ html,body
 
 #wrap
 {
-  min-height: 100%;  
+  min-height: 100%;
 }
 
 #main
@@ -15,22 +15,26 @@ html,body
     padding-bottom:150px; /* this needs to be bigger than footer height*/
 }
 
+div.main-content{
+    margin-top: 75px;
+}
+
 a.brand{
     margin-top: 5px;
 }
 
-.footer 
+.footer
 {
-    position: relative;
-    margin-top: -150px; /* negative value of footer height */
-    height: 150px;
-    clear:both;
-    padding-top:20px;
-    color:#fff;
-} 
+    background-color: #323232;
+}
 
 form.search{
     float: right;
     margin-top: 5px;
     margin-bottom: 0px;
+}
+
+div.release-container{
+    height: 320px;
+    text-align: center;
 }

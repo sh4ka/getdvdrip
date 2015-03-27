@@ -134,7 +134,11 @@ def set_covers(releases):
     for movie in r_dict['movies']:
         # todo param width
         poster_file = query.get_movie_poster(movie['title'])
-        movie['poster'] = config['images']['base_url'] + 'w185' + poster_file
+        if not poster_file or poster_file == '':
+            logging.info('NO POSTER FOUND')
+        else:
+            logging.info(poster_file)
+            movie['poster'] = config['images']['base_url'] + 'w154' + poster_file
     return json.dumps(r_dict)
 
 
@@ -182,6 +186,7 @@ def get_title(title):
             logging.info('FETCHING MOVIE FROM API')
             movie = query.query_movie(title)
             movie = set_star_ratings(movie)
+            movie = set_covers(movie)
             m_dict = json.loads(movie)
             if m_dict['total'] != 0:
                 m = Movie(title=key, data=movie)
